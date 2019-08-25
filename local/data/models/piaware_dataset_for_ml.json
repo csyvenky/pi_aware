@@ -1,0 +1,159 @@
+{
+    "modelName": "piaware_dataset_for_ml",
+    "displayName": "piaware_dataset_for_ml",
+    "description": "",
+    "objectSummary": {
+        "Event-Based": 0,
+        "Transaction-Based": 0,
+        "Search-Based": 1
+    },
+    "objects": [
+        {
+            "objectName": "base_dataset",
+            "displayName": "base_dataset",
+            "parentName": "BaseSearch",
+            "comment": "",
+            "fields": [
+                {
+                    "fieldName": "alt_baro",
+                    "owner": "base_dataset",
+                    "type": "number",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "alt_baro",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "alt_geom",
+                    "owner": "base_dataset",
+                    "type": "number",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "alt_geom",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "gs",
+                    "owner": "base_dataset",
+                    "type": "number",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "gs",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "ias",
+                    "owner": "base_dataset",
+                    "type": "number",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "ias",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "nav_altitude",
+                    "owner": "base_dataset",
+                    "type": "number",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "nav_altitude",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "nav_heading",
+                    "owner": "base_dataset",
+                    "type": "number",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "nav_heading",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "roll",
+                    "owner": "base_dataset",
+                    "type": "number",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "roll",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "tas",
+                    "owner": "base_dataset",
+                    "type": "number",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "tas",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "track",
+                    "owner": "base_dataset",
+                    "type": "number",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "track",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "nav_qnh",
+                    "owner": "base_dataset",
+                    "type": "number",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "nav_qnh",
+                    "comment": ""
+                },
+                {
+                    "fieldName": "mag_heading",
+                    "owner": "base_dataset",
+                    "type": "number",
+                    "fieldSearch": "",
+                    "required": false,
+                    "multivalue": false,
+                    "hidden": false,
+                    "editable": true,
+                    "displayName": "mag_heading",
+                    "comment": ""
+                }
+            ],
+            "calculations": [],
+            "constraints": [],
+            "lineage": "base_dataset",
+            "baseSearch": "index=flight_aware_dump \n| spath path=\"aircraft{}\" output=x \n| fields - _raw \n| fields now, x \n| mvexpand x \n| spath input=x"
+        }
+    ],
+    "objectNameList": [
+        "base_dataset"
+    ]
+}
