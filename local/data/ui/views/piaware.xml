@@ -76,7 +76,7 @@
 | mvexpand x
 | spath input=x
 | search flight="$flight$*" hex="$hex$"
-| table now, flight, hex, squawk, alt_baro, baro_rate, lat, lon, track, rssi, seen, ias, roll
+| table now, flight, hex, squawk, baro_alt, baro_rate, lat, lon, track, rssi, seen, ias, roll
 | sort - now</query>
           <earliest>$field1.earliest$</earliest>
           <latest>$field1.latest$</latest>
@@ -95,7 +95,7 @@
   </row>
   <row>
     <panel>
-      <title>Speed and Altitude</title>
+      <title>Speed and Altitude over Time</title>
       <chart>
         <search>
           <query>index=flight_aware_dump
@@ -105,8 +105,8 @@
 | mvexpand x
 | spath input=x
 | search flight="$flight$*" hex="$hex$"
-| fields now, ias, alt_baro
-| chart values(alt_baro) values(ias) over now</query>
+| fields ias, alt_baro
+| timechart values(alt_baro) values(ias)</query>
           <earliest>$field1.earliest$</earliest>
           <latest>$field1.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -115,14 +115,14 @@
         <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
         <option name="charting.axisLabelsY2.majorUnit">10</option>
         <option name="charting.axisTitleX.visibility">visible</option>
-        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
         <option name="charting.axisTitleY2.visibility">visible</option>
         <option name="charting.axisX.abbreviation">none</option>
         <option name="charting.axisX.scale">linear</option>
         <option name="charting.axisY.abbreviation">none</option>
         <option name="charting.axisY.scale">linear</option>
         <option name="charting.axisY2.abbreviation">none</option>
-        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.enabled">1</option>
         <option name="charting.axisY2.maximumNumber">500</option>
         <option name="charting.axisY2.minimumNumber">100</option>
         <option name="charting.axisY2.scale">inherit</option>
@@ -130,9 +130,9 @@
         <option name="charting.chart.bubbleMaximumSize">50</option>
         <option name="charting.chart.bubbleMinimumSize">10</option>
         <option name="charting.chart.bubbleSizeBy">area</option>
-        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.nullValueMode">connect</option>
         <option name="charting.chart.overlayFields">values(ias)</option>
-        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.showDataLabels">minmax</option>
         <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
         <option name="charting.chart.stackMode">default</option>
         <option name="charting.chart.style">shiny</option>
@@ -152,7 +152,7 @@
   </row>
   <row>
     <panel>
-      <title>Altitude over Time</title>
+      <title>Altitude and Rate over Time</title>
       <chart>
         <search>
           <query>index=flight_aware_dump
@@ -163,7 +163,7 @@
 | spath input=x
 | search flight="$flight$*" hex="$hex$"
 | fieldformat pretty_now = strftime(now, "%F %T")
-| chart values(alt_baro) values(baro_rate) over now</query>
+| timechart values(alt_baro) values(baro_rate)</query>
           <earliest>$field1.earliest$</earliest>
           <latest>$field1.latest$</latest>
           <sampleRatio>1</sampleRatio>
@@ -178,14 +178,15 @@
         <option name="charting.axisY.abbreviation">none</option>
         <option name="charting.axisY.scale">linear</option>
         <option name="charting.axisY2.abbreviation">none</option>
-        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.enabled">1</option>
         <option name="charting.axisY2.scale">inherit</option>
         <option name="charting.chart">line</option>
         <option name="charting.chart.bubbleMaximumSize">50</option>
         <option name="charting.chart.bubbleMinimumSize">10</option>
         <option name="charting.chart.bubbleSizeBy">area</option>
-        <option name="charting.chart.nullValueMode">gaps</option>
-        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.overlayFields">values(baro_rate)</option>
+        <option name="charting.chart.showDataLabels">minmax</option>
         <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
         <option name="charting.chart.stackMode">default</option>
         <option name="charting.chart.style">shiny</option>
