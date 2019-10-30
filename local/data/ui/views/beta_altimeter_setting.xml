@@ -1,0 +1,106 @@
+<form theme="dark">
+  <label>(beta) Altimeter Setting</label>
+  <fieldset submitButton="false" autoRun="true">
+    <input type="time" token="field1">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>PiAware Altimeter</title>
+      <single>
+        <search>
+          <query>index=flight_aware_dump
+| spath path="aircraft{}" output=x
+| fields - _raw
+| fields now, x
+| mvexpand x
+| spath input=x
+| search nav_qnh = *
+| timechart span=1h perc75(nav_qnh) AS alt_setting</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+          <refresh>10m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0x65a637","0x6db7c6","0xf7bc38","0xf58f39","0xd93f3c"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="trendInterval">-1h</option>
+        <option name="unit">hPa</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">0</option>
+        <option name="useThousandSeparators">0</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>PiAware Altimeter Setting Timechart</title>
+      <viz type="Splunk_ML_Toolkit.LinesViz">
+        <search>
+          <query>index=flight_aware_dump
+| spath path="aircraft{}" output=x
+| fields - _raw
+| fields now, x
+| mvexpand x
+| spath input=x
+| search nav_qnh = *
+| timechart span=1h perc75(nav_qnh) AS "Altimeter Setting"</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+          <refresh>10m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="Splunk_ML_Toolkit.LinesViz.showNavigator">true</option>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </viz>
+    </panel>
+    <panel>
+      <title>Altimeter Setting Histogram</title>
+      <viz type="Splunk_ML_Toolkit.HistogramViz">
+        <search>
+          <query>index=flight_aware_dump
+| spath path="aircraft{}" output=x
+| fields - _raw
+| fields now, x
+| mvexpand x
+| spath input=x
+| search nav_qnh = *
+| `histogram(nav_qnh,30)`</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+          <refresh>10m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </viz>
+    </panel>
+  </row>
+</form>
